@@ -628,7 +628,7 @@
     const leftColumn = document.querySelector('.col-left');
     const rightColumn = document.querySelector('.col-right');
     const taskbarApps = document.querySelectorAll('.taskbar-app');
-    let windowOrder = ['explorer-window', 'dialup-window', 'notepad-window'];
+    let windowOrder = ['dialup-window', 'explorer-window', 'notepad-window'];
 
     function focusWindow(windowId) {
       windowOrder = [windowId, ...windowOrder.filter(id => id !== windowId)];
@@ -649,7 +649,7 @@
       button.addEventListener('click', () => focusWindow(button.closest('.window').id));
     });
 
-    focusWindow('explorer-window');
+    focusWindow('notepad-window');
 
     // Clock
     function updateClock() {
