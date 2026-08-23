@@ -1,438 +1,689 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Explore Dani's digital desktop: social profiles, gaming, homelab projects, creative work, and direct contact.">
-  <meta name="theme-color" content="#008080">
-  <meta property="og:title" content="Dani // Bardsen.gg">
-  <meta property="og:description" content="A Windows 98-inspired personal hub for Dani's social profiles, projects, and contact desk.">
-  <meta property="og:url" content="https://bardsen.gg/">
-  <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Dani // Bardsen.gg">
-  <meta name="twitter:description" content="A Windows 98-inspired personal hub for Dani Baardsen's social profiles, projects, and contact desk.">
-  <link rel="canonical" href="https://bardsen.gg/">
-  <title>Dani // Bardsen.gg</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💾</text></svg>">
-  <link rel="stylesheet" href="https://unpkg.com/98.css@0.1.20/dist/98.css">
-  <style>
-    * { box-sizing: border-box; }
-    
-    body {
-      background-color: #008080;
-      font-family: "Pixelated MS Sans Serif", Arial;
-      margin: 0;
-      padding: 15px;
-      padding-bottom: 45px;
-      height: 100vh;
-      overflow: hidden;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Explore Dani's digital desktop: social profiles, gaming, homelab projects, creative work, and direct contact."
+    />
+    <meta name="theme-color" content="#008080" />
+    <meta property="og:title" content="Dani // Bardsen.gg" />
+    <meta
+      property="og:description"
+      content="A Windows 98-inspired personal hub for Dani's social profiles, projects, and contact desk."
+    />
+    <meta property="og:url" content="https://bardsen.gg/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Dani // Bardsen.gg" />
+    <meta
+      name="twitter:description"
+      content="A Windows 98-inspired personal hub for Dani Baardsen's social profiles, projects, and contact desk."
+    />
+    <link rel="canonical" href="https://bardsen.gg/" />
+    <title>Dani // Bardsen.gg</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💾</text></svg>"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/98.css@0.1.20/dist/98.css" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
 
-    .desktop {
-      display: flex;
-      gap: 15px;
-      max-width: 1400px;
-      margin: 0 auto;
-      height: 100%;
-    }
-    
-    .col-left {
-      flex: 1.2;
-      display: flex;
-      flex-direction: column;
-      min-width: 350px;
-      height: 100%;
-    }
-    
-    .col-right {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      min-width: 350px;
-      height: 100%;
-      min-height: 0;
-    }
-
-    .window-flex { display: flex; flex-direction: column; width: 100%; min-height: 0; }
-    .dialup-window { font-family: "MS Sans Serif", Arial, sans-serif; }
-    .dialup-window input,
-    .dialup-window textarea,
-    .dialup-window button { font-family: "MS Sans Serif", Arial, sans-serif; }
-    .dialup-window button[type="submit"] { font-family: "Pixelated MS Sans Serif", Arial; }
-    .window.window-focused { flex: 1 1 auto !important; height: 0 !important; }
-    .col-right #explorer-window { flex: 1 1 auto; height: 0; }
-    .h-100 { height: 100%; }
-    .window-body-flex {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      margin: 4px;
-      min-height: 0;
-    }
-
-    .menu-bar {
-      display: flex; gap: 12px; padding: 2px 6px; font-size: 11px;
-      border-bottom: 1px solid #808080; margin-bottom: 4px;
-    }
-    .menu-bar span { cursor: pointer; }
-    .menu-bar span:first-letter { text-decoration: underline; }
-    .address-bar { display: flex; align-items: center; gap: 6px; padding: 2px 4px; margin-bottom: 8px; }
-
-    .explorer-view {
-      background: #ffffff; 
-      border: 2px inset #ffffff; 
-      padding: 12px; 
-      overflow-y: auto;
-      flex: 1;
-      min-height: 0;
-    }
-    .explorer-search {
-      flex-shrink: 0;
-      background: #c0c0c0;
-      padding: 3px 4px;
-      border: 2px outset #ffffff;
-      gap: 6px;
-      margin-bottom: 4px;
-    }
-    .explorer-search label { color: #000080; font-weight: bold; }
-    .explorer-search input { flex: 1; min-width: 0; background: #ffffff; }
-
-    fieldset { margin-bottom: 12px; padding: 8px; }
-    legend { font-weight: bold; color: #000080; padding: 0 4px; }
-
-    .app-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 8px; }
-    .app-icon {
-      display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-      padding: 6px 4px; text-decoration: none; color: #000000; font-size: 11px;
-      text-align: center; cursor: pointer; border: 1px solid transparent; user-select: none;
-    }
-    .app-icon span { font-size: 24px; margin-bottom: 2px; }
-    .app-icon b { padding: 1px 3px; word-break: break-word; }
-    .app-icon:hover { outline: 1px dotted #000000; }
-    .app-icon:hover b { background-color: #000080; color: #ffffff; }
-
-    .status-bar { margin-top: 4px; display: flex; gap: 4px; }
-    .status-cell { border: 2px inset #ffffff; padding: 2px 6px; font-size: 11px; background: #c0c0c0; }
-    .status-box-log { background: #000000; color: #00ff00; font-family: monospace; padding: 2px 4px; font-size: 11px; margin-top: 4px; border: 2px inset #ffffff; }
-    /* Readability & Retro Win98 Theme */
-    .about-content { 
-      display: flex; 
-      gap: 16px; 
-      align-items: flex-start;
-    }
-    .profile-column {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 6px;
-      flex-shrink: 0;
-      position: sticky;
-      top: 0;
-      align-self: flex-start;
-    }
-    .donation-links {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-    .donation-link {
-      display: block;
-      padding: 3px 4px;
-      color: #000080;
-      background: #c0c0c0;
-      border: 2px outset #ffffff;
-      font-size: 11px;
-      font-weight: bold;
-      text-align: center;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-    .donation-link:active { border-style: inset; }
-    .donation-link:hover { background: #000080; color: #ffffff; }
-    
-    .about-text {
-      font-family: "MS Sans Serif", Arial, sans-serif;
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 1.6;
-      color: #000000;
-    }
-
-    .about-text h2 {
-      margin: 0 0 10px 0; 
-      color: #000080; 
-      font-family: "Pixelated MS Sans Serif", Arial;
-      font-size: 20px;
-      font-weight: bold;
-      border-bottom: 2px solid #000080;
-      padding-bottom: 4px;
-    }
-    
-    .about-text p {
-      margin: 0 0 14px 0;
-    }
-
-    .about-text b {
-      color: #000080;
-      font-family: "Pixelated MS Sans Serif", Arial;
-      font-size: 12px;
-    }
-
-    /* Sticky Profile Picture Container */
-    .profile-pic {
-      width: 150px; 
-      height: 150px; 
-      object-fit: cover; 
-      border: 1px solid #000080;
-      padding: 2px;
-      background: #ffffff; 
-      filter: saturate(1.15) contrast(1.05);
-      flex-shrink: 0;
-      box-shadow: 1px 1px 0px #000000;
-    }
-
-    .taskbar {
-      position: fixed; bottom: 0; left: 0; right: 0; height: 30px; background: #c0c0c0;
-      border-top: 2px solid #ffffff; display: flex; align-items: center; justify-content: space-between;
-      padding: 2px 4px; z-index: 999;
-    }
-    .taskbar-left { display: flex; align-items: center; gap: 4px; min-width: 0; }
-    .start-btn { font-weight: bold; display: flex; align-items: center; gap: 4px; padding: 2px 6px; cursor: pointer; }
-    .start-btn:active { border-style: inset; }
-    .taskbar-app { min-width: 110px; max-width: 170px; flex: 0 0 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 2px 8px; text-align: left; cursor: pointer; }
-    .taskbar-app.active { border-style: inset; }
-    .tray-clock { border: 2px inset #ffffff; padding: 2px 8px; font-size: 11px; background: #c0c0c0; }
-
-    @media (max-width: 700px) {
       body {
-        padding: 8px 8px 45px;
-        height: auto;
-        min-height: 100vh;
-        overflow-x: hidden;
-        overflow-y: auto;
+        background-color: #008080;
+        font-family: "Pixelated MS Sans Serif", Arial;
+        margin: 0;
+        padding: 15px;
+        padding-bottom: 45px;
+        height: 100vh;
+        overflow: hidden;
       }
 
       .desktop {
+        display: flex;
+        gap: 15px;
+        max-width: 1400px;
+        margin: 0 auto;
+        height: 100%;
+      }
+
+      .col-left {
+        flex: 1.2;
+        display: flex;
         flex-direction: column;
-        gap: 10px;
-        width: 100%;
-        height: auto;
-      }
-
-      .col-left,
-      .col-right {
-        width: 100%;
-        min-width: 0;
-        height: auto;
-      }
-
-      .col-left .window-focused {
-        min-height: 60vh;
+        min-width: 350px;
+        height: 100%;
       }
 
       .col-right {
-        gap: 10px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        min-width: 350px;
+        height: 100%;
+        min-height: 0;
       }
 
-      .window {
+      .window-flex {
+        display: flex;
+        flex-direction: column;
         width: 100%;
+        min-height: 0;
       }
-
-      .title-bar {
-        min-height: 24px;
+      .dialup-window {
+        font-family: "MS Sans Serif", Arial, sans-serif;
       }
-
-      .title-bar-text {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+      .dialup-window input,
+      .dialup-window textarea,
+      .dialup-window button {
+        font-family: "MS Sans Serif", Arial, sans-serif;
       }
-
-      .title-bar-controls button {
-        min-width: 22px;
-        min-height: 20px;
+      .dialup-window button[type="submit"] {
+        font-family: "Pixelated MS Sans Serif", Arial;
       }
-
-      .col-right .window {
-        flex: 0 0 auto;
+      .window.window-focused {
+        flex: 1 1 auto !important;
+        height: 0 !important;
       }
-
       .col-right #explorer-window {
-        height: 55vh;
+        flex: 1 1 auto;
+        height: 0;
+      }
+      .h-100 {
+        height: 100%;
+      }
+      .window-body-flex {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        margin: 4px;
+        min-height: 0;
+      }
+
+      .menu-bar {
+        display: flex;
+        gap: 12px;
+        padding: 2px 6px;
+        font-size: 11px;
+        border-bottom: 1px solid #808080;
+        margin-bottom: 4px;
+      }
+      .menu-bar span {
+        cursor: pointer;
+      }
+      .menu-bar span:first-letter {
+        text-decoration: underline;
+      }
+      .address-bar {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 2px 4px;
+        margin-bottom: 8px;
       }
 
       .explorer-view {
+        background: #ffffff;
+        border: 2px inset #ffffff;
+        padding: 12px;
+        overflow-y: auto;
+        flex: 1;
+        min-height: 0;
+      }
+      .explorer-search {
+        flex-shrink: 0;
+        background: #c0c0c0;
+        padding: 3px 4px;
+        border: 2px outset #ffffff;
+        gap: 6px;
+        margin-bottom: 4px;
+      }
+      .explorer-search label {
+        color: #000080;
+        font-weight: bold;
+      }
+      .explorer-search input {
+        flex: 1;
+        min-width: 0;
+        background: #ffffff;
+      }
+
+      fieldset {
+        margin-bottom: 12px;
         padding: 8px;
       }
-
-      .explorer-search {
-        padding: 5px;
-      }
-
-      .explorer-search input,
-      .dialup-window input,
-      .dialup-window textarea {
-        min-height: 28px;
-      }
-
-      .dialup-window button[type="submit"] {
-        min-height: 28px;
+      legend {
+        font-weight: bold;
+        color: #000080;
+        padding: 0 4px;
       }
 
       .app-grid {
-        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+        gap: 8px;
+      }
+      .app-icon {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 6px 4px;
+        text-decoration: none;
+        color: #000000;
+        font-size: 11px;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid transparent;
+        user-select: none;
+      }
+      .app-icon span {
+        font-size: 24px;
+        margin-bottom: 2px;
+      }
+      .app-icon b {
+        padding: 1px 3px;
+        word-break: break-word;
+      }
+      .app-icon:hover {
+        outline: 1px dotted #000000;
+      }
+      .app-icon:hover b {
+        background-color: #000080;
+        color: #ffffff;
+      }
+
+      .status-bar {
+        margin-top: 4px;
+        display: flex;
         gap: 4px;
       }
-
-      .app-icon {
-        min-height: 62px;
-        padding: 7px 3px;
+      .status-cell {
+        border: 2px inset #ffffff;
+        padding: 2px 6px;
+        font-size: 11px;
+        background: #c0c0c0;
       }
-
-      .app-icon span {
-        font-size: 21px;
+      .status-box-log {
+        background: #000000;
+        color: #00ff00;
+        font-family: monospace;
+        padding: 2px 4px;
+        font-size: 11px;
+        margin-top: 4px;
+        border: 2px inset #ffffff;
       }
-
+      /* Readability & Retro Win98 Theme */
       .about-content {
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .profile-column {
-        width: 100%;
+        display: flex;
+        gap: 16px;
         align-items: flex-start;
       }
-
+      .profile-column {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 0;
+        align-self: flex-start;
+      }
       .donation-links {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
       }
-
       .donation-link {
-        overflow: hidden;
-        text-overflow: ellipsis;
+        display: block;
+        padding: 3px 4px;
+        color: #000080;
+        background: #c0c0c0;
+        border: 2px outset #ffffff;
+        font-size: 11px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        white-space: nowrap;
       }
-
-      .profile-pic {
-        width: 120px;
-        height: 120px;
+      .donation-link:active {
+        border-style: inset;
+      }
+      .donation-link:hover {
+        background: #000080;
+        color: #ffffff;
       }
 
       .about-text {
-        font-size: 13px;
-        line-height: 1.5;
+        font-family: "MS Sans Serif", Arial, sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.6;
+        color: #000000;
       }
 
       .about-text h2 {
-        font-size: 18px;
+        margin: 0 0 10px 0;
+        color: #000080;
+        font-family: "Pixelated MS Sans Serif", Arial;
+        font-size: 20px;
+        font-weight: bold;
+        border-bottom: 2px solid #000080;
+        padding-bottom: 4px;
       }
 
-      .taskbar-left {
-        flex: 1 1 auto;
-        min-width: 0;
-        overflow-x: auto;
-        overflow-y: hidden;
-        touch-action: pan-x;
-        overscroll-behavior-x: contain;
-        scrollbar-width: none;
+      .about-text p {
+        margin: 0 0 14px 0;
       }
 
-      .taskbar-left::-webkit-scrollbar {
-        display: none;
+      .about-text b {
+        color: #000080;
+        font-family: "Pixelated MS Sans Serif", Arial;
+        font-size: 12px;
       }
 
-      .taskbar-app {
-        min-width: 92px;
-        max-width: 92px;
-        flex: 0 0 92px;
-        padding: 2px 5px;
-        font-size: 10px;
-      }
-
-      .start-btn {
-        padding: 2px 4px;
-      }
-
-      .start-btn svg {
-        margin-right: 0 !important;
-      }
-
-      .start-btn b {
-        display: none;
-      }
-
-      .tray-clock {
+      /* Sticky Profile Picture Container */
+      .profile-pic {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border: 1px solid #000080;
+        padding: 2px;
+        background: #ffffff;
+        filter: saturate(1.15) contrast(1.05);
         flex-shrink: 0;
+        box-shadow: 1px 1px 0px #000000;
       }
-    }
-  </style>
-</head>
-<body>
 
-  <div class="desktop">
-    <div class="col-left">
-      <div id="explorer-window" class="window window-flex h-100">
-        <div class="title-bar">
-          <div class="title-bar-text">Exploring - C:\Network\Social_Media</div>
-          <div class="title-bar-controls">
-            <button aria-label="Minimize"></button>
-            <button aria-label="Maximize"></button>
-            <button aria-label="Close"></button>
+      .taskbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 30px;
+        background: #c0c0c0;
+        border-top: 2px solid #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 2px 4px;
+        z-index: 999;
+      }
+      .taskbar-left {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        min-width: 0;
+      }
+      .start-btn {
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 2px 6px;
+        cursor: pointer;
+      }
+      .start-btn:active {
+        border-style: inset;
+      }
+      .taskbar-app {
+        min-width: 110px;
+        max-width: 170px;
+        flex: 0 0 auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding: 2px 8px;
+        text-align: left;
+        cursor: pointer;
+      }
+      .taskbar-app.active {
+        border-style: inset;
+      }
+      .tray-clock {
+        border: 2px inset #ffffff;
+        padding: 2px 8px;
+        font-size: 11px;
+        background: #c0c0c0;
+      }
+
+      @media (max-width: 700px) {
+        body {
+          padding: 8px 8px 45px;
+          height: auto;
+          min-height: 100vh;
+          overflow-x: hidden;
+          overflow-y: auto;
+        }
+
+        #dialup-window {
+          height: auto !important;
+        }
+
+        .status-box-log {
+          padding: 4px 6px;
+          font-size: 10px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .desktop {
+          flex-direction: column;
+          gap: 10px;
+          width: 100%;
+          height: auto;
+        }
+
+        .col-left,
+        .col-right {
+          width: 100%;
+          min-width: 0;
+          height: auto;
+        }
+
+        .col-left .window-focused {
+          min-height: 60vh;
+        }
+
+        .col-right {
+          gap: 10px;
+        }
+
+        .window {
+          width: 100%;
+        }
+
+        .title-bar {
+          min-height: 24px;
+        }
+
+        .title-bar-text {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .title-bar-controls button {
+          min-width: 22px;
+          min-height: 20px;
+        }
+
+        .col-right .window {
+          flex: 0 0 auto;
+        }
+
+        .col-right #explorer-window {
+          height: 55vh;
+        }
+
+        .explorer-view {
+          padding: 8px;
+        }
+
+        .explorer-search {
+          padding: 5px;
+        }
+
+        .explorer-search input,
+        .dialup-window input,
+        .dialup-window textarea {
+          min-height: 28px;
+        }
+
+        .dialup-window button[type="submit"] {
+          min-height: 28px;
+        }
+
+        .app-grid {
+          grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+          gap: 4px;
+        }
+
+        .app-icon {
+          min-height: 62px;
+          padding: 7px 3px;
+        }
+
+        .app-icon span {
+          font-size: 21px;
+        }
+
+        .about-content {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .profile-column {
+          width: 100%;
+          align-items: flex-start;
+          position: static;
+        }
+
+        .donation-links {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          width: 100%;
+        }
+
+        .donation-link {
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .profile-pic {
+          width: 120px;
+          height: 120px;
+        }
+
+        .about-text {
+          font-size: 13px;
+          line-height: 1.5;
+        }
+
+        .about-text h2 {
+          font-size: 18px;
+        }
+
+        .taskbar-left {
+          flex: 1;
+          min-width: 0;
+          overflow: hidden;
+        }
+
+        .taskbar-left::-webkit-scrollbar {
+          display: none;
+        }
+
+        .taskbar-app {
+          flex: 1 1 0;
+          min-width: 0;
+          max-width: none;
+          padding: 2px 4px;
+          font-size: 11px;
+        }
+
+        .start-btn {
+          padding: 2px 6px;
+          flex-shrink: 0;
+        }
+
+        .start-btn svg {
+          margin-right: 4px !important;
+        }
+
+        .start-btn b {
+          display: inline !important;
+        }
+
+        .tray-clock {
+          flex-shrink: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="desktop">
+      <div class="col-left">
+        <div id="explorer-window" class="window window-flex h-100">
+          <div class="title-bar">
+            <div class="title-bar-text">
+              Exploring - C:\Network\Social_Media
+            </div>
+            <div class="title-bar-controls">
+              <button aria-label="Minimize"></button>
+              <button aria-label="Maximize"></button>
+              <button aria-label="Close"></button>
+            </div>
           </div>
-        </div>
-        <div class="menu-bar">
-          <span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Favorites</span><span>Help</span>
-        </div>
-        <div class="address-bar">
-          <span style="font-size: 11px;">Address:</span>
-          <input type="text" value="C:\Network\Social_Media" readonly style="width: 100%; background: #fff;" />
-        </div>
-        
-        <div class="window-body-flex">
-          <div class="field-row explorer-search">
-            <label for="social-search" style="font-weight: bold;">Search:</label>
-            <input id="social-search" type="text" style="flex: 1;" placeholder="Find a platform..." />
+          <div class="menu-bar">
+            <span>File</span><span>Edit</span><span>View</span><span>Go</span
+            ><span>Favorites</span><span>Help</span>
           </div>
-          <div class="explorer-view">
+          <div class="address-bar">
+            <span style="font-size: 11px">Address:</span>
+            <input
+              type="text"
+              value="C:\Network\Social_Media"
+              readonly
+              style="width: 100%; background: #fff"
+            />
+          </div>
 
-            <fieldset>
-              <legend>📺 Social & Streaming</legend>
-              <div class="app-grid">
-                <a href="https://twitch.tv/BARDTINI" target="_blank" class="app-icon"><span>👾</span><b>Twitch</b></a>
-                <a href="https://youtube.com/@dunl" target="_blank" class="app-icon"><span>📺</span><b>YouTube</b></a>
-                <a href="https://twitter.com/BARDTINI" target="_blank" class="app-icon"><span>🐦</span><b>X_Twitter</b></a>
-                <a href="https://www.tiktok.com/@BARDTINI" target="_blank" class="app-icon"><span>📱</span><b>TikTok</b></a>
-                <a href="https://www.instagram.com/ivarsoey" target="_blank" class="app-icon"><span>📷</span><b>Instagram</b></a>
-                <a href="https://discord.gg/JDA8yWYmtY" target="_blank" class="app-icon"><span>💬</span><b>Discord</b></a>
-                <a href="https://www.reddit.com/user/BARDTINI" target="_blank" class="app-icon"><span>🤖</span><b>Reddit</b></a>
-              </div>
-            </fieldset>
+          <div class="window-body-flex">
+            <div class="field-row explorer-search">
+              <label for="social-search" style="font-weight: bold"
+                >Search:</label
+              >
+              <input
+                id="social-search"
+                type="text"
+                style="flex: 1"
+                placeholder="Find a platform..."
+              />
+            </div>
+            <div class="explorer-view">
+              <fieldset>
+                <legend>📺 Social & Streaming</legend>
+                <div class="app-grid">
+                  <a
+                    href="https://twitch.tv/BARDTINI"
+                    target="_blank"
+                    class="app-icon"
+                    ><span>👾</span><b>Twitch</b></a
+                  >
+                  <a
+                    href="https://youtube.com/@dunl"
+                    target="_blank"
+                    class="app-icon"
+                    ><span>📺</span><b>YouTube</b></a
+                  >
+                  <a
+                    href="https://twitter.com/BARDTINI"
+                    target="_blank"
+                    class="app-icon"
+                    ><span>🐦</span><b>X_Twitter</b></a
+                  >
+                  <a
+                    href="https://www.tiktok.com/@BARDTINI"
+                    target="_blank"
+                    class="app-icon"
+                    ><span>📱</span><b>TikTok</b></a
+                  >
+                  <a
+                    href="https://www.instagram.com/ivarsoey"
+                    target="_blank"
+                    class="app-icon"
+                    ><span>📷</span><b>Instagram</b></a
+                  >
+                  <a
+                    href="https://discord.gg/JDA8yWYmtY"
+                    target="_blank"
+                    class="app-icon"
+                    ><span>💬</span><b>Discord</b></a
+                  >
+                  <a
+                    href="https://www.reddit.com/user/BARDTINI"
+                    target="_blank"
+                    class="app-icon"
+                    ><span>🤖</span><b>Reddit</b></a
+                  >
+                </div>
+              </fieldset>
 
-            <fieldset>
-              <legend>🎮 Gaming & Esports</legend>
-              <div class="app-grid">
-                <a href="https://steamcommunity.com/id/BARDTINI" target="_blank" class="app-icon"><span>🎮</span><b>Steam</b></a>
-                <a href="https://tracker.gg/valorant/profile/riot/healerwhore%23111" target="_blank" class="app-icon"><span>👊</span><b>Riot</b></a>
-                <a href="https://www.op.gg/summoners/na/healerwhore-111" target="_blank" class="app-icon"><span>📈</span><b>OP.GG</b></a>
-                <a href="https://u.gg/lol/profile/na1/healerwhore-111" target="_blank" class="app-icon"><span>🟦</span><b>U.GG</b></a>
-                <a href="https://www.roblox.com/users/4430616894" target="_blank" class="app-icon"><span>🟥</span><b>Roblox</b></a>
-              </div>
-            </fieldset>
+              <fieldset>
+                <legend>🎮 Gaming & Esports</legend>
+                <div class="app-grid">
+                  <a
+                    href="https://steamcommunity.com/id/BARDTINI"
+                    target="_blank"
+                    class="app-icon"
+                    ><span>🎮</span><b>Steam</b></a
+                  >
+                  <a
+                    href="https://tracker.gg/valorant/profile/riot/healerwhore%23111"
+                    target="_blank"
+                    class="app-icon"
+                    ><span>👊</span><b>Riot</b></a
+                  >
+                  <a
+                    href="https://www.op.gg/summoners/na/healerwhore-111"
+                    target="_blank"
+                    class="app-icon"
+                    ><span>📈</span><b>OP.GG</b></a
+                  >
+                  <a
+                    href="https://u.gg/lol/profile/na1/healerwhore-111"
+                    target="_blank"
+                    class="app-icon"
+                    ><span>🟦</span><b>U.GG</b></a
+                  >
+                  <a
+                    href="https://www.roblox.com/users/4430616894"
+                    target="_blank"
+                    class="app-icon"
+                    ><span>🟥</span><b>Roblox</b></a
+                  >
+                </div>
+              </fieldset>
 
-            <fieldset>
-              <legend>💻 Code, AI & Learning</legend>
-              <div class="app-grid">
-                <a href="https://github.com/BARDTINI" target="_blank" class="app-icon"><span>💻</span><b>GitHub</b></a>
-                <a href="https://gitlab.com/BARDTINI" target="_blank" class="app-icon"><span>🦊</span><b>GitLab</b></a>
-                <a href="https://letterboxd.com/BARDTINI" target="_blank" class="app-icon"><span>🎬</span><b>Letterboxd</b></a>
-                <a href="https://huggingface.co/BARDTINI" target="_blank" class="app-icon"><span>🤗</span><b>HF</b></a>
-              </div>
-            </fieldset>
+              <fieldset>
+                <legend>💻 Code, AI & Learning</legend>
+                <div class="app-grid">
+                  <a
+                    href="https://github.com/BARDTINI"
+                    target="_blank"
+                    class="app-icon"
+                    ><span>💻</span><b>GitHub</b></a
+                  >
+                  <a
+                    href="https://gitlab.com/BARDTINI"
+                    target="_blank"
+                    class="app-icon"
+                    ><span>🦊</span><b>GitLab</b></a
+                  >
+                  <a
+                    href="https://letterboxd.com/BARDTINI"
+                    target="_blank"
+                    class="app-icon"
+                    ><span>🎬</span><b>Letterboxd</b></a
+                  >
+                  <a
+                    href="https://huggingface.co/BARDTINI"
+                    target="_blank"
+                    class="app-icon"
+                    ><span>🤗</span><b>HF</b></a
+                  >
+                </div>
+              </fieldset>
 
-            <!-- <fieldset>
+              <!-- <fieldset>
               <legend>🛒 Shopping & Commerce</legend>
               <div class="app-grid">
                 <a href="https://www.ebay.com/usr/BARDTINI" target="_blank" class="app-icon"><span>🏷️</span><b>eBay</b></a>
@@ -440,255 +691,510 @@
                 <a href="https://BARDTINI.myshopify.com" target="_blank" class="app-icon"><span>🛍️</span><b>Shopify</b></a>
               </div>
             </fieldset> -->
-
-
-          </div>
-          <div class="status-bar">
-            <div id="object-count" class="status-cell" style="flex: 2;">0 Object(s)</div>
-            <div class="status-cell" style="flex: 1;">My Computer</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-right">
-      
-      <!-- Notepad Window -->
-      <div id="notepad-window" class="window window-flex" style="flex: 1; height: 0;">
-        <div class="title-bar">
-          <div class="title-bar-text">Notepad - ReadMe.txt</div>
-          <div class="title-bar-controls">
-            <button aria-label="Minimize"></button>
-            <button aria-label="Maximize"></button>
-            <button aria-label="Close"></button>
-          </div>
-        </div>
-        <div class="menu-bar" style="border-bottom: none; margin-bottom: 0;">
-          <span>File</span><span>Edit</span><span>Search</span><span>Help</span>
-        </div>
-        <div class="window-body-flex">
-          <div class="explorer-view">
-            <div class="about-content">
-              <div class="profile-column">
-                <img id="profile-pic" src="pfp/1.png" alt="Dani" class="profile-pic">
-                <div class="donation-links" aria-label="Support Dani">
-                  <a class="donation-link" href="https://buymeacoffee.com/bardsen" target="_blank" rel="noopener">☕ Buy Me a Coffee</a>
-                  <a class="donation-link" href="https://paypal.me/DBardsen" target="_blank" rel="noopener">💳 PayPal</a>
-                </div>
+            </div>
+            <div class="status-bar">
+              <div id="object-count" class="status-cell" style="flex: 2">
+                0 Object(s)
               </div>
-              <div class="about-text">
-                <h2>Hi, I'm Dani.</h2>
-                <p>I'm a <span id="dynamic-age"></span>-year-old software architect, entrepreneur, and self-hosting homelab enthusiast living between Norway and the US. I speak English, Norwegian, Swedish, some Danish, and I'm still learning Spanish! I also run a solo technology business alongside my day job.</p>
-
-                <p><b>[ Enterprise Homelab & AI Infrastructure ]</b><br>
-                My homelab runs on a Dell PowerEdge R730 server managed through Unraid OS and iDRAC8/IPMI. Hardware specs include dual Intel Xeon E5-2680 v3 CPUs, 128GB DDR4 RAM, an 8x 4TB HDD array totalling 32TB with a 1TB NVMe SSD cache, and two NVIDIA Tesla P40 24GB GPUs. I self-host local LLMs (Gemma 4, Mistral Nemo, and Qwen) using llama.cpp, Ollama, Lossless-Claw, and OpenClaw, while experimenting with OpenCode and Hermes. My containerized Docker stack includes Plex, WireGuard VPN, Immich photo storage, RustDesk Server, and Nginx Proxy Manager for my personal domains.</p>
-
-                <p><b>[ Workstation & Audio Gear ]</b><br>
-                My most used rig is built around a 2021 Razer Blade 14 (AMD Ryzen / NVIDIA RTX 3070 Laptop GPU) paired with a 27" Samsung Odyssey OLED G6 (1440p @ 360Hz). Audio and input gear includes a MOTU M2 USB audio interface, a Shure SM7B dynamic microphone on a Blue Compass boom arm, FiiO FH3 IEMs (with the balanced silicone tips), a Keychron K2, a Razer DeathAdder V3 Pro mouse, and a Flydigi Vader 4 Pro controller. I am using an iPhone 17 Pro Max, AirPods 4 with ANC, and a Bose SoundLink Max speaker.</p>
-
-                <p><b>[ Gaming & Esports ]</b><br>
-                I play Fortnite on PC in Zero Build mode using stretched resolution because sometimes I just want to sit down and shoot without building. I also used to play Apex Legends, and I love administering and hosting modded or vanilla Minecraft servers, especially the All The Mods series. My most beloved game will always be Pokémon GO; I participate in local raids and community Wayfarer nominations as I walk and discover interesting points of interest.</p>
-
-                <p><b>[ Pokémon TCG & Content Creation ]</b><br>
-                I actively collect, open, and sell Pokémon TCG booster packs, focusing on both Japanese and English packs. I create short-form TikTok content featuring pack openings, tech hardware breakdowns, and daily vlogs.</p>
-
-                <p><b>[ Personal Interests, Fitness & Life ]</b><br>
-                Away from screens, I enjoy thrifting, building LEGO, I love designing and 3D printing, and exploring Carl Jung's psychological theories. I listen to history, crime, and poetry. My home fitness routine in the garage centers on adjustable dumbbells, an incline bench, and a Kayoba rowing machine, supported by daily wellness supplements (Vitamin D, Magnesium, Zinc, Ashwagandha, and creatine among others).</p>
-              </div>
+              <div class="status-cell" style="flex: 1">My Computer</div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Dialup Window -->
-      <div id="dialup-window" class="window window-flex dialup-window" style="flex: 0 0 auto; height: 265px;">
-        <div class="title-bar">
-          <div class="title-bar-text">Dialup Me v2.1 - Direct Transmission</div>
-          <div class="title-bar-controls">
-            <button aria-label="Minimize"></button>
-            <button aria-label="Maximize"></button>
-            <button aria-label="Close"></button>
+      <div class="col-right">
+        <!-- Notepad Window -->
+        <div
+          id="notepad-window"
+          class="window window-flex"
+          style="flex: 1; height: 0"
+        >
+          <div class="title-bar">
+            <div class="title-bar-text">Notepad - ReadMe.txt</div>
+            <div class="title-bar-controls">
+              <button aria-label="Minimize"></button>
+              <button aria-label="Maximize"></button>
+              <button aria-label="Close"></button>
+            </div>
+          </div>
+          <div class="menu-bar" style="border-bottom: none; margin-bottom: 0">
+            <span>File</span><span>Edit</span><span>Search</span
+            ><span>Help</span>
+          </div>
+          <div class="window-body-flex">
+            <div class="explorer-view">
+              <div class="about-content">
+                <div class="profile-column">
+                  <img
+                    id="profile-pic"
+                    src="pfp/1.png"
+                    alt="Dani"
+                    class="profile-pic"
+                  />
+                  <div class="donation-links" aria-label="Support Dani">
+                    <a
+                      class="donation-link"
+                      href="https://buymeacoffee.com/bardsen"
+                      target="_blank"
+                      rel="noopener"
+                      >☕ Buy Me a Coffee</a
+                    >
+                    <a
+                      class="donation-link"
+                      href="https://paypal.me/DBardsen"
+                      target="_blank"
+                      rel="noopener"
+                      >💳 PayPal</a
+                    >
+                  </div>
+                </div>
+                <div class="about-text">
+                  <h2>Hi, I'm Dani.</h2>
+                  <p>
+                    I'm a <span id="dynamic-age"></span>-year-old software
+                    architect, entrepreneur, and self-hosting homelab enthusiast
+                    living between Norway and the US. I speak English,
+                    Norwegian, Swedish, some Danish, and I'm still learning
+                    Spanish. I also run a solo technology business alongside my
+                    day job.
+                  </p>
+
+                  <p>
+                    <b>[ Enterprise Homelab & AI Infrastructure ]</b><br />
+                    My homelab runs on a Dell PowerEdge R730 server managed
+                    through Unraid OS and iDRAC8/IPMI. Hardware specs include
+                    dual Intel Xeon E5-2680 v3 CPUs, 128GB DDR4 RAM, an 8x 4TB
+                    HDD array totalling 32TB with a 1TB NVMe SSD cache, and two
+                    NVIDIA Tesla P40 24GB GPUs. I self-host local LLMs (Gemma 4,
+                    Mistral Nemo, and Qwen) using llama.cpp, Ollama,
+                    Lossless-Claw, and OpenClaw, while experimenting with
+                    OpenCode and Hermes. My containerized Docker stack includes
+                    Plex, WireGuard VPN, Immich photo storage, RustDesk Server,
+                    and Nginx Proxy Manager for my personal domains.
+                  </p>
+
+                  <p>
+                    <b>[ Workstation & Audio Gear ]</b><br />
+                    My most used rig is built around a 2021 Razer Blade 14 (AMD
+                    Ryzen / NVIDIA RTX 3070 Laptop GPU) paired with a 27"
+                    Samsung Odyssey OLED G6 (1440p @ 360Hz). Audio and input
+                    gear includes a MOTU M2 USB audio interface, a Shure SM7B
+                    dynamic microphone on a Blue Compass boom arm, FiiO FH3 IEMs
+                    (with the balanced silicone tips), a Keychron K2, a Razer
+                    DeathAdder V3 Pro mouse, and a Flydigi Vader 4 Pro
+                    controller. I am using an iPhone 17 Pro Max, AirPods 4 with
+                    ANC, and a Bose SoundLink Max speaker.
+                  </p>
+
+                  <p>
+                    <b>[ Gaming & Esports ]</b><br />
+                    I play Fortnite on PC in Zero Build mode using stretched
+                    resolution because sometimes I just want to sit down and
+                    shoot without building. I also used to play Apex Legends,
+                    and I love administering and hosting modded or vanilla
+                    Minecraft servers, especially the All The Mods series. My
+                    most beloved game will always be Pokémon GO; I participate
+                    in local raids and community Wayfarer nominations as I walk
+                    and discover interesting points of interest.
+                  </p>
+
+                  <p>
+                    <b>[ Pokémon TCG & Content Creation ]</b><br />
+                    I actively collect, open, and sell Pokémon TCG booster
+                    packs, focusing on both Japanese and English packs. I create
+                    short-form TikTok content featuring pack openings, tech
+                    hardware breakdowns, and daily vlogs.
+                  </p>
+
+                  <p>
+                    <b>[ Personal Interests, Fitness & Life ]</b><br />
+                    Away from screens, I enjoy thrifting, building LEGO, I love
+                    designing and 3D printing, and exploring Carl Jung's
+                    psychological theories. I listen to history, crime, and
+                    poetry. My home fitness routine in the garage centers on
+                    adjustable dumbbells, an incline bench, and a Kayoba rowing
+                    machine, supported by daily wellness supplements (Vitamin D,
+                    Magnesium, Zinc, Ashwagandha, and Creatine among others).
+                  </p>
+
+                  <p>
+                    <b>[ Contact ]</b><br />
+                    Feel free to use the DialUp window to get in touch for
+                    fastest answer! You can also contact me on Discord @dunl or
+                    <a
+                      href="mailto:daniel@bardsen.gg?subject=Bardsen.gg%20-%20Contact"
+                      >Daniel@Bardsen.gg</a
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="window-body-flex">
-          <div style="background: #ffffff; border: 2px inset #ffffff; padding: 6px; display: flex; flex-direction: column; flex: 1; overflow: hidden;">
-            <form id="dialup-form" action="https://formspree.io/f/xgawqypq" method="POST" style="display: flex; flex-direction: column; flex: 1; margin: 0;">
-              <div style="display: flex; flex-direction: column; gap: 2px; margin-bottom: 2px;">
-                <div class="field-row-stacked" style="flex: 1;">
-                  <label for="name" style="font-size: 11px;">CALLER ID:</label>
-                  <input id="name" type="text" name="name" required placeholder="Guest_404" style="width: 100%; font-size: 12px; padding: 1px 3px;" />
+
+        <!-- Dialup Window -->
+        <div
+          id="dialup-window"
+          class="window window-flex dialup-window"
+          style="flex: 0 0 auto; height: 265px"
+        >
+          <div class="title-bar">
+            <div class="title-bar-text">
+              Dialup Me v2.1 - Direct Transmission
+            </div>
+            <div class="title-bar-controls">
+              <button aria-label="Minimize"></button>
+              <button aria-label="Maximize"></button>
+              <button aria-label="Close"></button>
+            </div>
+          </div>
+          <div class="window-body-flex">
+            <div
+              style="
+                background: #ffffff;
+                border: 2px inset #ffffff;
+                padding: 6px;
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                overflow: hidden;
+              "
+            >
+              <form
+                id="dialup-form"
+                action="https://formspree.io/f/xgawqypq"
+                method="POST"
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  flex: 1;
+                  margin: 0;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2px;
+                    margin-bottom: 2px;
+                  "
+                >
+                  <div class="field-row-stacked" style="flex: 1">
+                    <label for="name" style="font-size: 11px">CALLER ID:</label>
+                    <input
+                      id="name"
+                      type="text"
+                      name="name"
+                      required
+                      placeholder="Guest_404"
+                      style="width: 100%; font-size: 12px; padding: 1px 3px"
+                    />
+                  </div>
+                  <div class="field-row-stacked" style="flex: 1">
+                    <label for="email" style="font-size: 11px"
+                      >RETURN LINE:</label
+                    >
+                    <input
+                      id="email"
+                      type="email"
+                      name="email"
+                      required
+                      placeholder="user@domain.com"
+                      style="width: 100%; font-size: 12px; padding: 1px 3px"
+                    />
+                  </div>
                 </div>
-                <div class="field-row-stacked" style="flex: 1;">
-                  <label for="email" style="font-size: 11px;">RETURN LINE:</label>
-                  <input id="email" type="email" name="email" required placeholder="user@domain.com" style="width: 100%; font-size: 12px; padding: 1px 3px;" />
+                <div
+                  class="field-row-stacked"
+                  style="
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 2px;
+                  "
+                >
+                  <label for="msg" style="font-size: 11px">PAYLOAD:</label>
+                  <textarea
+                    id="msg"
+                    name="message"
+                    required
+                    style="
+                      resize: none;
+                      flex: 1;
+                      font-size: 12px;
+                      padding: 2px;
+                      margin: 0;
+                      min-height: 51px;
+                    "
+                  ></textarea>
                 </div>
-              </div>
-              <div class="field-row-stacked" style="flex: 1; display: flex; flex-direction: column; margin-bottom: 2px;">
-                <label for="msg" style="font-size: 11px;">PAYLOAD:</label>
-                <textarea id="msg" name="message" required style="resize: none; flex: 1; font-size: 12px; padding: 2px; margin: 0; min-height: 51px;"></textarea>
-              </div>
-              <button type="submit" style="width: 100%; font-weight: bold; font-size: 12px; padding: 2px 0;">⚡ DIAL (56K CONNECT)</button>
-            </form>
-            <div id="status" class="status-box-log">MODEM STATUS: IDLE</div>
+                <button
+                  type="submit"
+                  style="
+                    width: 100%;
+                    font-weight: bold;
+                    font-size: 12px;
+                    padding: 2px 0;
+                  "
+                >
+                  ⚡ DIAL (56K CONNECT)
+                </button>
+              </form>
+              <div id="status" class="status-box-log">MODEM STATUS: IDLE</div>
+            </div>
           </div>
         </div>
       </div>
-
     </div>
-  </div>
 
-  <div class="taskbar">
-    <div class="taskbar-left">
-      <button class="start-btn" onclick="location.reload()">
-        <svg width="16" height="16" viewBox="0 0 16 16" style="margin-right: 4px; flex-shrink: 0;">
-          <path d="M1 2.2L7 1.3V7.2H1V2.2Z" fill="#ff4d4d"/>
-          <path d="M7.8 1.2L15 0.1V7.2H7.8V1.2Z" fill="#5cd65c"/>
-          <path d="M1 8H7V13.8L1 12.9V8Z" fill="#3385ff"/>
-          <path d="M7.8 8H15V15.1L7.8 14V8Z" fill="#ffcc00"/>
-        </svg>
-        <b>Start</b>
-      </button>
-      <button class="taskbar-app active" data-window="explorer-window" type="button">Explorer</button>
-      <button class="taskbar-app" data-window="dialup-window" type="button">Dialup</button>
-      <button class="taskbar-app" data-window="notepad-window" type="button">Notepad</button>
+    <div class="taskbar">
+      <div class="taskbar-left">
+        <button class="start-btn" onclick="location.reload()">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            style="margin-right: 4px; flex-shrink: 0"
+          >
+            <path d="M1 2.2L7 1.3V7.2H1V2.2Z" fill="#ff4d4d" />
+            <path d="M7.8 1.2L15 0.1V7.2H7.8V1.2Z" fill="#5cd65c" />
+            <path d="M1 8H7V13.8L1 12.9V8Z" fill="#3385ff" />
+            <path d="M7.8 8H15V15.1L7.8 14V8Z" fill="#ffcc00" />
+          </svg>
+          <b>Start</b>
+        </button>
+        <button
+          class="taskbar-app active"
+          data-window="explorer-window"
+          type="button"
+        >
+          Explorer
+        </button>
+        <button class="taskbar-app" data-window="dialup-window" type="button">
+          Dialup
+        </button>
+        <button class="taskbar-app" data-window="notepad-window" type="button">
+          Notepad
+        </button>
+      </div>
+      <div class="tray-clock" id="clock">12:00 AM</div>
     </div>
-    <div class="tray-clock" id="clock">12:00 AM</div>
-  </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // 1. Dynamic Age
-      const bday = new Date('2001-10-15');
-      const now = new Date();
-      let age = now.getFullYear() - bday.getFullYear();
-      const m = now.getMonth() - bday.getMonth();
-      if (m < 0 || (m === 0 && now.getDate() < bday.getDate())) { 
-        age--; 
-      }
-      document.getElementById('dynamic-age').innerText = age;
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // 1. Dynamic Age
+        const bday = new Date("2001-10-15");
+        const now = new Date();
+        let age = now.getFullYear() - bday.getFullYear();
+        const m = now.getMonth() - bday.getMonth();
+        if (m < 0 || (m === 0 && now.getDate() < bday.getDate())) {
+          age--;
+        }
+        document.getElementById("dynamic-age").innerText = age;
 
-      // 2. Profile Picture
-      const pfpElement = document.getElementById('profile-pic');
-      const pfpCandidates = [];
-      const pfpExtensions = ['png', 'jpg', 'jpeg', 'webp'];
-      for (let imageNumber = 1; imageNumber <= 100; imageNumber++) {
-        pfpExtensions.forEach(extension => pfpCandidates.push(`pfp/${imageNumber}.${extension}`));
-      }
+        // 2. Profile Picture
+        const pfpElement = document.getElementById("profile-pic");
+        const pfpCandidates = [];
+        const pfpExtensions = ["png", "jpg", "jpeg", "webp"];
+        for (let imageNumber = 1; imageNumber <= 100; imageNumber++) {
+          pfpExtensions.forEach((extension) =>
+            pfpCandidates.push(`pfp/${imageNumber}.${extension}`),
+          );
+        }
 
-      Promise.all(pfpCandidates.map(imagePath => new Promise(resolve => {
-        const image = new Image();
-        image.onload = () => resolve(imagePath);
-        image.onerror = () => resolve(null);
-        image.src = imagePath;
-      }))).then(loadedImages => {
-        const availableImages = loadedImages.filter(Boolean);
-        const randomImg = availableImages[Math.floor(Math.random() * availableImages.length)];
-        if (randomImg) pfpElement.src = randomImg;
-      });
-      pfpElement.onerror = () => { pfpElement.src = 'pfp/1.png'; };
-
-      // 3. Object Count
-      const icons = document.querySelectorAll('.app-icon');
-      const countEl = document.getElementById('object-count');
-      countEl.innerText = `${icons.length} Object(s)`;
-      document.querySelectorAll('a[target="_blank"]').forEach(link => {
-        link.rel = 'noopener noreferrer';
-      });
-
-      // 4. Social Search Filter
-      const searchInput = document.getElementById('social-search');
-      searchInput.addEventListener('input', (e) => {
-        const filter = e.target.value.toLowerCase();
-        const fieldsets = document.querySelectorAll('.explorer-view fieldset');
-        let visibleCount = 0;
-        
-        fieldsets.forEach(fieldset => {
-          let hasVisible = false;
-          const apps = fieldset.querySelectorAll('.app-icon');
-          
-          apps.forEach(app => {
-            const text = app.textContent.toLowerCase();
-            if (text.includes(filter)) {
-              app.style.display = '';
-              hasVisible = true;
-              visibleCount++;
-            } else {
-              app.style.display = 'none';
-            }
-          });
-          
-          fieldset.style.display = hasVisible ? '' : 'none';
+        Promise.all(
+          pfpCandidates.map(
+            (imagePath) =>
+              new Promise((resolve) => {
+                const image = new Image();
+                image.onload = () => resolve(imagePath);
+                image.onerror = () => resolve(null);
+                image.src = imagePath;
+              }),
+          ),
+        ).then((loadedImages) => {
+          const availableImages = loadedImages.filter(Boolean);
+          const randomImg =
+            availableImages[Math.floor(Math.random() * availableImages.length)];
+          if (randomImg) pfpElement.src = randomImg;
         });
-        
-        countEl.innerText = `${visibleCount} Object(s)`;
+        pfpElement.onerror = () => {
+          pfpElement.src = "pfp/1.png";
+        };
+
+        // 3. Object Count
+        const icons = document.querySelectorAll(".app-icon");
+        const countEl = document.getElementById("object-count");
+        countEl.innerText = `${icons.length} Object(s)`;
+        document.querySelectorAll('a[target="_blank"]').forEach((link) => {
+          link.rel = "noopener noreferrer";
+        });
+
+        // 4. Social Search Filter
+        const searchInput = document.getElementById("social-search");
+        searchInput.addEventListener("input", (e) => {
+          const filter = e.target.value.toLowerCase();
+          const fieldsets = document.querySelectorAll(
+            ".explorer-view fieldset",
+          );
+          let visibleCount = 0;
+
+          fieldsets.forEach((fieldset) => {
+            let hasVisible = false;
+            const apps = fieldset.querySelectorAll(".app-icon");
+
+            apps.forEach((app) => {
+              const text = app.textContent.toLowerCase();
+              if (text.includes(filter)) {
+                app.style.display = "";
+                hasVisible = true;
+                visibleCount++;
+              } else {
+                app.style.display = "none";
+              }
+            });
+
+            fieldset.style.display = hasVisible ? "" : "none";
+          });
+
+          countEl.innerText = `${visibleCount} Object(s)`;
+        });
       });
-    });
 
-    // Taskbar window switcher
-    const leftColumn = document.querySelector('.col-left');
-    const rightColumn = document.querySelector('.col-right');
-    const taskbarApps = document.querySelectorAll('.taskbar-app');
-    let windowOrder = ['dialup-window', 'explorer-window', 'notepad-window'];
+      // Taskbar window switcher
+      const leftColumn = document.querySelector(".col-left");
+      const rightColumn = document.querySelector(".col-right");
+      const taskbarApps = document.querySelectorAll(".taskbar-app");
+      let windowOrder = ["dialup-window", "explorer-window", "notepad-window"];
 
-    function focusWindow(windowId) {
-      windowOrder = [windowId, ...windowOrder.filter(id => id !== windowId)];
-      const selectedWindow = document.getElementById(windowOrder[0]);
-      leftColumn.appendChild(selectedWindow);
-      windowOrder.slice(1).forEach(id => rightColumn.appendChild(document.getElementById(id)));
-      taskbarApps.forEach(app => app.classList.toggle('active', app.dataset.window === windowId));
-      document.querySelectorAll('.desktop .window').forEach(appWindow => {
-        appWindow.classList.toggle('window-focused', appWindow === selectedWindow);
-      });
-    }
-
-    taskbarApps.forEach(app => {
-      app.addEventListener('click', () => focusWindow(app.dataset.window));
-    });
-
-    document.querySelectorAll('.title-bar-controls button[aria-label="Maximize"]').forEach(button => {
-      button.addEventListener('click', () => focusWindow(button.closest('.window').id));
-    });
-
-    focusWindow('notepad-window');
-
-    // Clock
-    function updateClock() {
-      const now = new Date();
-      document.getElementById('clock').innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // Dialup Form Logic
-    const form = document.getElementById('dialup-form');
-    const status = document.getElementById('status');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      status.innerText = 'STATUS: DIALING 1-800-CONNECT...';
-      const data = new FormData(form);
-      try {
-        status.innerText = 'STATUS: HANDSHAKE ESTABLISHED (56.0 Kbps)...';
-        const response = await fetch(form.action, { method: form.method, body: data, headers: { 'Accept': 'application/json' }});
-        if (response.ok) {
-          status.innerText = 'STATUS: PACKET DELIVERED! (200 OK)';
-          form.reset();
-        } else {
-          status.innerText = 'STATUS: ERROR - TRANSMISSION REJECTED';
-        }
-      } catch (err) {
-        status.innerText = 'STATUS: ERROR - CONNECTION DROPPED';
+      function focusWindow(windowId) {
+        windowOrder = [
+          windowId,
+          ...windowOrder.filter((id) => id !== windowId),
+        ];
+        const selectedWindow = document.getElementById(windowOrder[0]);
+        leftColumn.appendChild(selectedWindow);
+        windowOrder
+          .slice(1)
+          .forEach((id) =>
+            rightColumn.appendChild(document.getElementById(id)),
+          );
+        taskbarApps.forEach((app) =>
+          app.classList.toggle("active", app.dataset.window === windowId),
+        );
+        document.querySelectorAll(".desktop .window").forEach((appWindow) => {
+          appWindow.classList.toggle(
+            "window-focused",
+            appWindow === selectedWindow,
+          );
+        });
       }
-    });
 
-    // Enter submits; Shift+Enter stays single-line.
-    document.getElementById('msg').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
+      taskbarApps.forEach((app) => {
+        app.addEventListener("click", () => focusWindow(app.dataset.window));
+      });
+
+      document
+        .querySelectorAll('.title-bar-controls button[aria-label="Maximize"]')
+        .forEach((button) => {
+          button.addEventListener("click", () =>
+            focusWindow(button.closest(".window").id),
+          );
+        });
+
+      focusWindow("notepad-window");
+
+      // Clock
+      function updateClock() {
+        const now = new Date();
+        document.getElementById("clock").innerText = now.toLocaleTimeString(
+          [],
+          { hour: "2-digit", minute: "2-digit" },
+        );
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      // Dialup Form Logic
+      const form = document.getElementById("dialup-form");
+      const status = document.getElementById("status");
+      form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        if (!e.shiftKey) {
-          form.requestSubmit();
+        status.innerText = "STATUS: DIALING 1-800-CONNECT...";
+        const data = new FormData(form);
+        try {
+          status.innerText = "STATUS: HANDSHAKE ESTABLISHED (56.0 Kbps)...";
+          const response = await fetch(form.action, {
+            method: form.method,
+            body: data,
+            headers: { Accept: "application/json" },
+          });
+          if (response.ok) {
+            status.innerText = "STATUS: PACKET DELIVERED! (200 OK)";
+            form.reset();
+          } else {
+            status.innerText = "STATUS: ERROR - TRANSMISSION REJECTED";
+          }
+        } catch (err) {
+          status.innerText = "STATUS: ERROR - CONNECTION DROPPED";
         }
+      });
+
+      // Enter submits; Shift+Enter stays single-line.
+      document.getElementById("msg").addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          if (!e.shiftKey) {
+            form.requestSubmit();
+          }
+        }
+      });
+      // Click-and-drag to scroll for desktop
+      function enableDragScroll(container) {
+        let isDown = false;
+        let startY, scrollTop;
+
+        container.style.cursor = "grab";
+
+        container.addEventListener("mousedown", (e) => {
+          // Ignore drag when clicking interactive elements or text inputs
+          if (
+            ["A", "INPUT", "TEXTAREA", "BUTTON", "LABEL"].includes(
+              e.target.tagName,
+            ) ||
+            e.target.closest("a")
+          ) {
+            return;
+          }
+
+          isDown = true;
+          container.style.cursor = "grabbing";
+          container.style.userSelect = "none";
+          startY = e.pageY - container.offsetTop;
+          scrollTop = container.scrollTop;
+        });
+
+        const stopDragging = () => {
+          if (!isDown) return;
+          isDown = false;
+          container.style.cursor = "grab";
+          container.style.removeProperty("user-select");
+        };
+
+        container.addEventListener("mouseleave", stopDragging);
+        container.addEventListener("mouseup", stopDragging);
+
+        container.addEventListener("mousemove", (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          const y = e.pageY - container.offsetTop;
+          const walk = (y - startY) * 1.2; // Adjust scroll speed multiplier
+          container.scrollTop = scrollTop - walk;
+        });
       }
-    });
-  </script>
-</body>
+
+      // Attach to all scrollable views
+      document.querySelectorAll(".explorer-view").forEach(enableDragScroll);
+    </script>
+  </body>
 </html>
