@@ -27,10 +27,23 @@
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💾</text></svg>"
     />
-    <link rel="stylesheet" href="https://unpkg.com/98.css@0.1.20/dist/98.css" />
+    <link rel="stylesheet" href="98.css" />
     <style>
       * {
         box-sizing: border-box;
+      }
+
+      /* Only block text selection on retro UI elements where highlighting looks buggy */
+      .title-bar,
+      .taskbar,
+      .start-btn,
+      .app-icon,
+      button,
+      legend,
+      .menu-bar {
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
       }
 
       body {
@@ -410,8 +423,11 @@
         }
 
         .title-bar-controls button {
-          min-width: 22px;
-          min-height: 20px;
+          padding: 0;
+          width: 16px;
+          height: 14px;
+          min-width: 16px;
+          min-height: 14px;
         }
 
         .col-right .window {
@@ -518,10 +534,6 @@
           margin-right: 4px !important;
         }
 
-        .start-btn b {
-          display: inline !important;
-        }
-
         .tray-clock {
           flex-shrink: 0;
         }
@@ -575,42 +587,49 @@
                   <a
                     href="https://twitch.tv/BARDTINI"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="app-icon"
                     ><span>👾</span><b>Twitch</b></a
                   >
                   <a
                     href="https://youtube.com/@dunl"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="app-icon"
                     ><span>📺</span><b>YouTube</b></a
                   >
                   <a
                     href="https://twitter.com/BARDTINI"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="app-icon"
                     ><span>🐦</span><b>X_Twitter</b></a
                   >
                   <a
                     href="https://www.tiktok.com/@BARDTINI"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="app-icon"
                     ><span>📱</span><b>TikTok</b></a
                   >
                   <a
                     href="https://www.instagram.com/ivarsoey"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="app-icon"
                     ><span>📷</span><b>Instagram</b></a
                   >
                   <a
                     href="https://discord.gg/JDA8yWYmtY"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="app-icon"
                     ><span>💬</span><b>Discord</b></a
                   >
                   <a
                     href="https://www.reddit.com/user/BARDTINI"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="app-icon"
                     ><span>🤖</span><b>Reddit</b></a
                   >
@@ -623,30 +642,35 @@
                   <a
                     href="https://steamcommunity.com/id/BARDTINI"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="app-icon"
                     ><span>🎮</span><b>Steam</b></a
                   >
                   <a
                     href="https://tracker.gg/valorant/profile/riot/healerwhore%23111"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="app-icon"
                     ><span>👊</span><b>Riot</b></a
                   >
                   <a
                     href="https://www.op.gg/summoners/na/healerwhore-111"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="app-icon"
                     ><span>📈</span><b>OP.GG</b></a
                   >
                   <a
                     href="https://u.gg/lol/profile/na1/healerwhore-111"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="app-icon"
                     ><span>🟦</span><b>U.GG</b></a
                   >
                   <a
                     href="https://www.roblox.com/users/4430616894"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="app-icon"
                     ><span>🟥</span><b>Roblox</b></a
                   >
@@ -659,24 +683,28 @@
                   <a
                     href="https://github.com/BARDTINI"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="app-icon"
                     ><span>💻</span><b>GitHub</b></a
                   >
                   <a
                     href="https://gitlab.com/BARDTINI"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="app-icon"
                     ><span>🦊</span><b>GitLab</b></a
                   >
                   <a
                     href="https://letterboxd.com/BARDTINI"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="app-icon"
                     ><span>🎬</span><b>Letterboxd</b></a
                   >
                   <a
                     href="https://huggingface.co/BARDTINI"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="app-icon"
                     ><span>🤗</span><b>HF</b></a
                   >
@@ -727,7 +755,7 @@
                 <div class="profile-column">
                   <img
                     id="profile-pic"
-                    src="pfp/1.png"
+                    src="pfp/1.webp"
                     alt="Dani"
                     class="profile-pic"
                   />
@@ -961,7 +989,7 @@
             <path d="M1 8H7V13.8L1 12.9V8Z" fill="#3385ff" />
             <path d="M7.8 8H15V15.1L7.8 14V8Z" fill="#ffcc00" />
           </svg>
-          <b>Start</b>
+          Start
         </button>
         <button
           class="taskbar-app active"
@@ -992,43 +1020,19 @@
         }
         document.getElementById("dynamic-age").innerText = age;
 
-        // 2. Profile Picture
+        // 2. Profile Picture (Optimized Sequential)
         const pfpElement = document.getElementById("profile-pic");
-        const pfpCandidates = [];
-        const pfpExtensions = ["png", "jpg", "jpeg", "webp"];
-        for (let imageNumber = 1; imageNumber <= 100; imageNumber++) {
-          pfpExtensions.forEach((extension) =>
-            pfpCandidates.push(`pfp/${imageNumber}.${extension}`),
-          );
-        }
 
-        Promise.all(
-          pfpCandidates.map(
-            (imagePath) =>
-              new Promise((resolve) => {
-                const image = new Image();
-                image.onload = () => resolve(imagePath);
-                image.onerror = () => resolve(null);
-                image.src = imagePath;
-              }),
-          ),
-        ).then((loadedImages) => {
-          const availableImages = loadedImages.filter(Boolean);
-          const randomImg =
-            availableImages[Math.floor(Math.random() * availableImages.length)];
-          if (randomImg) pfpElement.src = randomImg;
-        });
-        pfpElement.onerror = () => {
-          pfpElement.src = "pfp/1.png";
-        };
+        // Just update this number whenever you add or remove an image!
+        const totalImages = 3;
+
+        const randomNum = Math.floor(Math.random() * totalImages) + 1;
+        pfpElement.src = `pfp/${randomNum}.webp`;
 
         // 3. Object Count
         const icons = document.querySelectorAll(".app-icon");
         const countEl = document.getElementById("object-count");
         countEl.innerText = `${icons.length} Object(s)`;
-        document.querySelectorAll('a[target="_blank"]').forEach((link) => {
-          link.rel = "noopener noreferrer";
-        });
 
         // 4. Social Search Filter
         const searchInput = document.getElementById("social-search");
