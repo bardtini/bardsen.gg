@@ -1,6 +1,21 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Daniel Baardsen",
+        "url": "https://bardsen.gg",
+        "image": "https://bardsen.gg/pfp/1.webp",
+        "jobTitle": "Software Architect",
+        "sameAs": [
+          "https://github.com/BARDTINI",
+          "https://twitter.com/BARDTINI",
+          "https://twitch.tv/BARDTINI"
+        ]
+      }
+    </script>
     <meta property="og:image" content="https://bardsen.gg/pfp/1.webp" />
     <meta property="og:image:alt" content="Dani // Bardsen.gg" />
     <meta property="og:site_name" content="Bardsen.gg" />
@@ -35,6 +50,24 @@
     <style>
       * {
         box-sizing: border-box;
+      }
+
+      /* Global Title Bar Fixes */
+      .title-bar {
+        display: flex;
+        align-items: center;
+      }
+      .title-bar-text {
+        flex: 1;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-right: 8px;
+      }
+      .title-bar-controls {
+        flex-shrink: 0;
+        display: flex;
       }
 
       /* Only block text selection on retro UI elements where highlighting looks buggy */
@@ -235,6 +268,7 @@
         margin-top: 4px;
         border: 2px inset #ffffff;
       }
+
       /* Readability & Retro Win98 Theme */
       .about-content {
         display: flex;
@@ -369,7 +403,7 @@
         background: #c0c0c0;
       }
 
-      @media (max-width: 700px) {
+      @media (max-width: 960px) {
         body {
           padding: 8px 8px 45px;
           height: auto;
@@ -418,12 +452,6 @@
 
         .title-bar {
           min-height: 24px;
-        }
-
-        .title-bar-text {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
         }
 
         .title-bar-controls button {
@@ -545,7 +573,7 @@
     </style>
   </head>
   <body>
-    <div class="desktop">
+    <main class="desktop">
       <div class="col-left">
         <div id="explorer-window" class="window window-flex h-100">
           <div class="title-bar">
@@ -648,28 +676,28 @@
                     target="_blank"
                     rel="noopener noreferrer"
                     class="app-icon"
-                    ><span>👑</span><b>Fortnite</b></a
+                    ><span>👑</span><b>Fortnite.exe</b></a
                   >
                   <a
                     href="https://steamcommunity.com/id/BARDTINI"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="app-icon"
-                    ><span>🎮</span><b>Steam</b></a
+                    ><span>🎮</span><b>Steam.exe</b></a
                   >
                   <a
                     href="https://u.gg/lol/profile/na1/healerwhore-111"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="app-icon"
-                    ><span>🟦</span><b>League of Legends</b></a
+                    ><span>🟦</span><b>League of Legends.exe</b></a
                   >
                   <a
                     href="https://www.roblox.com/users/4430616894"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="app-icon"
-                    ><span>🟥</span><b>Roblox</b></a
+                    ><span>🟥</span><b>Roblox.exe</b></a
                   >
                 </div>
               </fieldset>
@@ -703,19 +731,10 @@
                     target="_blank"
                     rel="noopener noreferrer"
                     class="app-icon"
-                    ><span>🤗</span><b>HF</b></a
+                    ><span>🤗</span><b>Huggingface</b></a
                   >
                 </div>
               </fieldset>
-
-              <!-- <fieldset>
-              <legend>🛒 Shopping & Commerce</legend>
-              <div class="app-grid">
-                <a href="https://www.ebay.com/usr/BARDTINI" target="_blank" class="app-icon"><span>🏷️</span><b>eBay</b></a>
-                <a href="https://www.etsy.com/shop/BARDTINI" target="_blank" class="app-icon"><span>🎨</span><b>Etsy</b></a>
-                <a href="https://BARDTINI.myshopify.com" target="_blank" class="app-icon"><span>🛍️</span><b>Shopify</b></a>
-              </div>
-            </fieldset> -->
             </div>
             <div class="status-bar">
               <div id="object-count" class="status-cell" style="flex: 2">
@@ -970,7 +989,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </main>
 
     <div class="taskbar">
       <div class="taskbar-left">
